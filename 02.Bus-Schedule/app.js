@@ -1,3 +1,5 @@
+import { createProfile } from "../04.Locked-Profile/creatingProfile.js";
+
 function solve() {
 const label = document.querySelector('#info span')
 const departBtn = document.getElementById('depart')
