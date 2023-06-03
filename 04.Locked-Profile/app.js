@@ -5,13 +5,17 @@ const unlockBtn = document.getElementById('unlocked');
 const showMoreBtn = document.querySelector('button');
 const mainElement = document.getElementById('main')
 showMoreBtn.addEventListener('click', lockedProfile)
-function lockedProfile(){
-   
+function lockedProfile() {
+
   if (unlockBtn.checked == true) {
 
-    makingRequest('http://localhost:3030/jsonstore/advanced/profiles')
-    
-    
+    try {
+      makingRequest('http://localhost:3030/jsonstore/advanced/profiles')
+    } catch(error) {
+      console.log(error)
+    }
+
+
 }
 
 
@@ -19,6 +23,7 @@ async function makingRequest(url) {
       
   let response = await fetch(url);
   let data = await response.json()
+  
   
   for (const key in data) {
     
@@ -37,6 +42,7 @@ async function makingRequest(url) {
     createBtn('button', profileDiv, false, false, false)
     
   }
+ 
 }
 
 

@@ -1,4 +1,4 @@
-export function createProfile(element,src, text, appender, nameOfClass) {
+export function createProfile(element,atribute, text, appender, nameOfClass) {
 
     let el = document.createElement(element)
 
@@ -8,8 +8,8 @@ export function createProfile(element,src, text, appender, nameOfClass) {
     if(appender) {
         appender.appendChild(el)
     }
-    if(src) {
-        el.src = src
+    if(atribute) {
+        el.setAttribute('id', atribute)
 
     }
     if(nameOfClass) {
@@ -41,3 +41,30 @@ return el;
 
 
 }
+
+
+
+export const template = ()=> `
+    <div class="profile">
+        <img atribute="./iconProfile2.png" class="userIcon" />
+        <label>Lock</label>
+        <input type="radio" name="user1Locked" value="lock" checked>
+        <label>Unlock</label>
+        <input type="radio" id="unlocked" name="user1Locked" value="unlock"><br>
+        <hr>
+        <label>Username</label>
+        <input type="text" name="user1Username" value="" disabled readonly />
+        <div class="user1Username">
+            <hr>
+            <label>Email:</label>
+            <input type="email" name="user1Email" value="" disabled readonly />
+            <label>Age:</label>
+            <input type="text" name="user1Age" value="" disabled readonly />
+        </div>
+        
+        <button>Show more</button>
+    </div>
+
+
+
+`
