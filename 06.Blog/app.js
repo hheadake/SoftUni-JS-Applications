@@ -41,16 +41,10 @@ const response = await request.json();
      }
         const target = optionField.value
 
-     for (let i = 0; i < array.length; i++) {
-       
-       const id = array[i].postId
-       if (id === target) {
-        let text = array[i].text
-        let div = createEl('div', false, `${text}`, appender, false);
-       }
-       
-     }
-  
+        const match = array.find( x => x.postId === target)
+      
+         let div = createEl('div', false, `${match.text}`, appender, false);
+        
 
 
 
