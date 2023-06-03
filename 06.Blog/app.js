@@ -2,7 +2,9 @@ function attachEvents() {
     
 const loadBtn = document.getElementById('btnLoadPosts');
 const optionField = document.getElementById('posts');
-const postBtn = document.getElementById('btnViewPost')
+const postBtn = document.getElementById('btnViewPost');
+const appender = document.getElementById('post-comments');
+let array = [];
 
 loadBtn.addEventListener('click', async function getData() { 
 
@@ -33,15 +35,27 @@ const response = await request.json();
         for (const key in response) {
     
             const element = response[key];
-           console.log(element.text)
+            array.push(element)
+            
        
      }
-        
+        const target = optionField.value
+
+     for (let i = 0; i < array.length; i++) {
+       
+       const id = array[i].postId
+       if (id === target) {
+        let text = array[i].text
+        let div = createEl('div', false, `${text}`, appender, false);
+       }
+       
+     }
+  
+
 
 
     }
-
-
+    
 
 
 }
