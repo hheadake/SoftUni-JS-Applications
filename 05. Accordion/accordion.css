@@ -28,9 +28,12 @@ body {
 }
 
 .extra {
-  display: none;
+  display: '';
 }
 
+.pElement {
+  display: '';
+}
 .head {
   background: #ccccff;
   padding: 1em;

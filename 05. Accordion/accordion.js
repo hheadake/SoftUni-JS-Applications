@@ -1,45 +1,57 @@
-const mainEl = document.getElementById('main');
-import { createProfile } from "../04.Locked-Profile/creatingProfile.js";
-
-
-async function solution(){
- 
-const url = 'http://localhost:3030/jsonstore/advanced/articles/list'
-
-try {
-    const response = await fetch(url);
-    const data = await response.json();
-    
-    
-    data.forEach(element => {
-        
-        const divElement = createProfile('div',false, false, mainEl,'accordion');
-        const innerDiv = createProfile('div', false, false, divElement,'head');
-        createProfile('span', false, `${element.title}`, innerDiv, false);
-        const btn = createProfile('button', `${element._id}`, 'More', innerDiv, 'button');
-        const extraDiv = createProfile('div', false, false, divElement);
-        btn.addEventListener('click', setData);
-        async function setData (e) {
-            let id = e.target.id
-            const url = `http://localhost:3030/jsonstore/advanced/articles/details/${id}`
-            
-            const req = await fetch(url);
-            const res = await req.json();
-            
-            
-            let pEl = createProfile('p', false,`${res.content}`, extraDiv, false)
-            
-        }
-        
-        
+async function solution() {
+    try {
+      const main = document.getElementById('main');
+      const res = await fetch('http://localhost:3030/jsonstore/advanced/articles/list');
+      const data = await res.json();
+  
+      if (!res.ok) {
+        throw new Error('Error!');
+      }
+  
+      data.forEach((x) => main.appendChild(createElements(x)));
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+  
+  function createElements({ _id, title }) {
+    const div = document.createElement('div');
+    div.classList.add('accordion');
+    const id = _id;
+  
+    div.innerHTML = `<div class="head">
+    <span>${title}</span>
+    <button class="button" id="${id}">More</button>
+    </div>
+    <div class="extra">
+    <p>Scalable Vector Graphics .....</p>
+    </div>
+    `;
+  
+    const btn = div.querySelector('button');
+    const extraDiv = div.querySelector('.extra');
+    const hiddenDiv = div.querySelector('.extra > p');
+  
+    btn.addEventListener('click', async () => {
+      const url = `http://localhost:3030/jsonstore/advanced/articles/details/${id}`;
+      const res = await fetch(url);
+  
+      if (!res.ok) {
+        throw new Error();
+      }
+  
+      const contentData = await res.json();
+      hiddenDiv.textContent = contentData.content;
+  
+      if (btn.textContent == 'More') {
+        extraDiv.style.display = 'block';
+        btn.textContent = 'Less';
+      } else {
+        btn.textContent = 'More';
+        extraDiv.style.display = 'none';
+      }
     });
-    
-}  catch (error) {
-    console.log(err)
- }
-
-
-
-
-} solution();
-
+    return div;
+  }
+  
+  solution();
